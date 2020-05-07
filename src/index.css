@@ -16,7 +16,9 @@ body {
 .masthead.segment {
   min-height: 700px;
   padding: 1em 0 !important;
-}
+  background-size: cover;
+  height: 100vh;
+ }
 
 .masthead .ui.menu .ui.button,
 .ui.menu a.ui.inverted.button {

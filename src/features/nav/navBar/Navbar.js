@@ -1,33 +1,47 @@
 import React, { Component } from 'react'
 import { Menu, Container, Button } from 'semantic-ui-react';
 import logo from '../../../assets/images/logo.png'; 
+import { NavLink, Link, withRouter } from 'react-router-dom';
+import SignedOutMenu from '../menus/SignedOutMenu';
+import SignedInMenu from '../menus/SignedInMenu';
 
 class Navbar extends Component {
+  state = {
+    authenticated: false
+  }
+
+  handleSignIn = () => this.setState({authenticated: true});
+
+  handleSignOut = () => {
+    this.setState({authenticated: false})
+    this.props.history.replace('/')
+
+  }
+
   render() {
+    const {authenticated} = this.state;
     return (
-      <Menu inverted fixed="top">
-        <Container>
+        <Menu inverted fixed="top">
+          <Container>
 
-          <Menu.Item header>
-            <img src={logo} alt="logo"/>
-            Re-vents
-          </Menu.Item>
+            <Menu.Item as={NavLink} exact to="/" header>
+              <img src={logo} alt="logo"/>
+              Re-vents
+            </Menu.Item>
+  
+            <Menu.Item as={NavLink} to="/events" name="Events"/>
+            <Menu.Item as={NavLink} to="/people" name="People"/>
 
-          <Menu.Item name="Events"/>
+            <Menu.Item as={Link} to="/createEvent">
+              <Button floated="right" positive inverted content="Create Event"/>
+            </Menu.Item>
 
-          <Menu.Item>
-            <Button floated="right" positive inverted content="Create Event"/>
-          </Menu.Item>
-
-          <Menu.Item position="right">
-            <Button basic inverted content="Login"/>
-            <Button basic inverted content="Sign Out" style={{marginLeft: '0.5em'}}/>
-          </Menu.Item>
-            
-        </Container>
-      </Menu>
+            { authenticated ? <SignedInMenu signOut={this.handleSignOut}/> : <SignedOutMenu signIn={this.handleSignIn}/>}
+                    
+          </Container>
+        </Menu>
     )
   }
 }
 
-export default Navbar; 
+export default withRouter(Navbar); 
