@@ -29,7 +29,7 @@ class Navbar extends Component {
               Re-vents
             </Menu.Item>
   
-            <Menu.Item as={NavLink} to="/events" name="Events"/>
+            <Menu.Item as={NavLink} exact to="/events" name="Events"/>
             <Menu.Item as={NavLink} to="/people" name="People"/>
 
             <Menu.Item as={Link} to="/createEvent">

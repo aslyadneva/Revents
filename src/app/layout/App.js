@@ -24,9 +24,7 @@ function App() {
           <Route exact path="/events">
             <EventDashboard/>
           </Route>  
-          <Route exact path="/events/:id">
-            <EventDetailedPage/>
-          </Route> 
+          <Route exact path="/events/:id" component={EventDetailedPage}/>
           <Route exact path="/people">
             <PeopleDashboard/>
           </Route>   

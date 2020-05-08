@@ -5,37 +5,11 @@ import EventForm from '../eventForm/EventForm';
 import cuid from 'cuid';
 
 import user from '../../../assets/images/user.png'; 
-
-const events = [
-  {
-    id: '1', 
-    title: 'Event 1 title', 
-    date: '2020-03-28', 
-    category: 'drinks', 
-    description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Delectus facere reprehenderit esse ad rem nemo laudantium, debitis ducimus voluptatem optio.', 
-    city: 'London, UK', 
-    venue: 'Venue Name, Street Name, London, UK', 
-    hostedBy: 'Tom', 
-    hostPhotoUrl: "https://randomuser.me/api/portraits/men/22.jpg", 
-    attendees: [
-      {
-        id: 'b', 
-        name: 'Tom', 
-        photoUrl: "https://randomuser.me/api/portraits/men/22.jpg"
-      }, 
-      {
-        id: 'a', 
-        name: 'Bob', 
-        photoUrl: "https://randomuser.me/api/portraits/men/20.jpg"
-      }
-    ]
-    
-  }
-]
+import { connect } from 'react-redux';
+import { createEvent, updateEvent, deleteEvent } from '../eventActions'; 
 
 class EventDashboard extends Component {
   state = {
-    events: events, 
     isOpen: false, 
     selectedEvent: null
   }
@@ -53,25 +27,19 @@ class EventDashboard extends Component {
   }
 
   handleCreateEvent = newEvent => {
-    newEvent.id = cuid(); 
-    newEvent.hostPhotoUrl = user; 
-    this.setState(({events}) => ({ events: [...events, newEvent], isOpen: false }))
+    newEvent.id = cuid()
+    newEvent.hostPhotoUrl = user
+    this.props.createEvent(newEvent)
+    this.setState({ isOpen: false })
   }
 
   handleUpdateEvent = updatedEvent => {
-    // use map to clone the existing state events array 
-    this.setState({events: this.state.events.map(event => {
-      if (event.id === updatedEvent.id) {
-        // clone a new obj for the updated event
-        return { ...updatedEvent}
-      } else {
-        return event 
-      }
-    }), isOpen: false, selectedEvent: null})
+    this.props.updateEvent(updatedEvent)
+    this.setState({isOpen: false, selectedEvent: null})
   }
 
   handleDeleteEvent = eventId => {
-    this.setState({events: this.state.events.filter(event => event.id !== eventId)})
+    this.props.deleteEvent(eventId)
   }
 
   handleSelectEvent = event => {
@@ -79,7 +47,8 @@ class EventDashboard extends Component {
   }
 
   render() {
-    const {events, isOpen, selectedEvent} = this.state;
+    const {isOpen, selectedEvent} = this.state;
+    const {events} = this.props; 
 
     return (
       <Grid>
@@ -114,4 +83,10 @@ class EventDashboard extends Component {
   }
 }
 
-export default EventDashboard;
+const mapStateToProps = state => {
+  return {
+    events: state.events
+  }
+}
+
+export default connect(mapStateToProps, {createEvent, updateEvent, deleteEvent})(EventDashboard);
