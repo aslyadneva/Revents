@@ -3,7 +3,7 @@ import { CREATE_EVENT, UPDATE_EVENT, DELETE_EVENT } from "./eventTypes";
 const INITIAL_STATE = [
     {
       id: '1', 
-      title: 'Event 1 title', 
+      title: 'Event 1 title',  
       date: '2020-03-28', 
       category: 'drinks', 
       description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Delectus facere reprehenderit esse ad rem nemo laudantium, debitis ducimus voluptatem optio.', 

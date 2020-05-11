@@ -21,22 +21,16 @@ function App() {
         <Navbar/>
 
         <Container className="main">
+
           <Route exact path="/events">
             <EventDashboard/>
           </Route>  
           <Route exact path="/events/:id" component={EventDetailedPage}/>
-          <Route exact path="/people">
-            <PeopleDashboard/>
-          </Route>   
-          <Route exact path="/profile/:id">
-            <UserDetailedPage/>
-          </Route>   
-          <Route path="/settings">
-            <SettingsDashboard/>
-          </Route> 
-          <Route exact path="/createEvent">
-            <EventForm/>
-          </Route> 
+          <Route exact path="/people" component={PeopleDashboard}/> 
+          <Route exact path="/profile/:id" component={UserDetailedPage}/>   
+          <Route path="/settings" component={SettingsDashboard}/>
+          <Route exact path={["/createEvent", "/manage/:id"]} component={EventForm}/>
+
         </Container>
       </Route>
 
