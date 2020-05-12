@@ -31,7 +31,7 @@ const EventDetailedHeader = ({event}) => {
                   content={event.title}
                   style={{color: 'white'}}
                 />
-                <p>{event.date}</p>
+                <p>{event.date.toString()}</p>
                 <p>Hosted by <strong>{event.hostedBy}</strong></p>
               </Item.Content>
             </Item>

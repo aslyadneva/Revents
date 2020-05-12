@@ -6,20 +6,24 @@ import EventDetailedSidebar from './EventDetailedSidebar'
 import { Grid } from 'semantic-ui-react';
 import { connect } from 'react-redux'
 
-const EventDetailedPage = ({event}) => {
-  console.log(event)
-  return (
-   <Grid>
-     <Grid.Column width={10}>
-       <EventDetailedHeader event={event}/>
-       <EventDetailedInfo event={event}/>
-       <EventDetailedChat/>
-     </Grid.Column>
-     <Grid.Column width={6}>
-       <EventDetailedSidebar attendees={event.attendees ? event.attendees : []}/>
-     </Grid.Column>
-   </Grid>
-  )
+const EventDetailedPage = ({event, history}) => {
+  if (!event) {
+    history.replace('/events')  
+    return (null)  
+  } else {
+    return (
+      <Grid>
+        <Grid.Column width={10}>
+          <EventDetailedHeader event={event}/>
+          <EventDetailedInfo event={event}/>
+          <EventDetailedChat/>
+        </Grid.Column>
+        <Grid.Column width={6}>
+          <EventDetailedSidebar attendees={event.attendees ? event.attendees : []}/>
+        </Grid.Column>
+      </Grid>
+     )
+  }      
 }
 
 const mapStateToProps = (state, {match}) => {

@@ -24,7 +24,7 @@ const EventDetailedInfo = ({event}) => {
           </Grid.Column>
 
           <Grid.Column width={15}>
-            <span>{event.date}</span>
+            <span>{event.date.toString()}</span>
           </Grid.Column>
         </Grid>
       </Segment>

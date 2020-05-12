@@ -22,7 +22,7 @@ class Navbar extends Component {
     const {authenticated} = this.state;
     return (
         <Menu inverted fixed="top">
-          <Container>
+          <Container> 
 
             <Menu.Item as={NavLink} exact to="/" header>
               <img src={logo} alt="logo"/>
