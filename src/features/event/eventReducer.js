@@ -9,6 +9,10 @@ const INITIAL_STATE = [
       description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Delectus facere reprehenderit esse ad rem nemo laudantium, debitis ducimus voluptatem optio.', 
       city: 'London, UK', 
       venue: 'Venue Name, Street Name, London, UK', 
+      venueLatLng: {
+        lat: 51.5118074,
+        lng: -0.12300089999996544
+      },
       hostedBy: 'Tom', 
       hostPhotoUrl: "https://randomuser.me/api/portraits/men/22.jpg", 
       attendees: [

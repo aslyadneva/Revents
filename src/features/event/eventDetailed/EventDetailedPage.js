@@ -11,7 +11,7 @@ const EventDetailedPage = ({event, history}) => {
     history.replace('/events')  
     return (null)  
   } else {
-    return (
+    return ( 
       <Grid>
         <Grid.Column width={10}>
           <EventDetailedHeader event={event}/>
