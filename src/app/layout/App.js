@@ -9,11 +9,13 @@ import EventForm from '../../features/event/eventForm/EventForm';
 import Navbar from '../../features/nav/navBar/Navbar';
 import { Container } from 'semantic-ui-react';
 import { Route } from 'react-router-dom';
+import ModalManager from '../../features/modals/ModalManager';
 
 
 function App() {
   return (
     <Fragment>
+      <ModalManager/>
 
       <Route exact path="/" component={HomePage}/>
 
