@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import { Grid } from 'semantic-ui-react';
 import EventList from '../eventList/EventList';
+import EventActivity from '../eventActivity/EventActivity';
 
 import { connect } from 'react-redux';
 import { deleteEvent } from '../eventActions'; 
+
 
 const mapStateToProps = state => {
   return {
@@ -31,7 +33,7 @@ class EventDashboard extends Component {
         </Grid.Column>
 
         <Grid.Column width={6}>
-            <h2>Activity Feed</h2>
+            <EventActivity/>
         </Grid.Column>
 
       </Grid>

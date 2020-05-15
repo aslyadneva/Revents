@@ -1,10 +1,10 @@
-import { CREATE_EVENT, UPDATE_EVENT, DELETE_EVENT } from "./eventTypes";
+import { FETCH_EVENTS, CREATE_EVENT, UPDATE_EVENT, DELETE_EVENT } from "./eventTypes";
 
 const INITIAL_STATE = [
     {
       id: '1', 
       title: 'Event 1 title',  
-      date: '2020-03-28', 
+      date: '2020-03-28T18:00:00', 
       category: 'drinks', 
       description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Delectus facere reprehenderit esse ad rem nemo laudantium, debitis ducimus voluptatem optio.', 
       city: 'London, UK', 
@@ -32,6 +32,9 @@ const INITIAL_STATE = [
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case FETCH_EVENTS: 
+      return [...action.payload];
+
     case CREATE_EVENT: 
       return [...state, action.payload];
 

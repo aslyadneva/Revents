@@ -1,7 +1,7 @@
 import React, {Fragment} from 'react'
 import { Segment, Item, Label, List } from 'semantic-ui-react'
 
-import user from '../../../assets/images/user.png'
+// import user from '../../../assets/images/user.png'
 
 const EventDetailedSidebar = ({attendees}) => {
   const isHost = false; 
