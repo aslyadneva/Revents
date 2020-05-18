@@ -7,6 +7,10 @@ import { format, parseISO } from 'date-fns';
 class EventListItem extends Component {
   render() {
     const {event, deleteEvent} = this.props; 
+    console.log(event.attendees); 
+    let result = Object.values(event.attendees)
+    console.log(result); 
+    
     return (
       <Segment.Group>
 
@@ -26,14 +30,17 @@ class EventListItem extends Component {
 
         <Segment>
           <span>
-            <Icon name="clock"/> {format(parseISO(event.date), 'EEEE do LLL')} at {format(parseISO(event.date), 'h:mm a')}
-            <Icon name="marker"/> {event.venue}
+            <Icon name="clock"/> 
+            {format(event.date.toDate(), 'EEEE do LLL')} at {format(event.date.toDate(), 'h:mm a')}
+
+            <Icon name="marker"/> 
+            {event.venue}
           </span>
         </Segment>
 
         <Segment secondary>
           <List horizontal>
-            {event.attendees && event.attendees.map(attendee => <EventListAttendee key={attendee.id} attendee={attendee}/>)}
+            {event.attendees && Object.values(event.attendees).map((attendee, idx) => <EventListAttendee key={idx} attendee={attendee}/>)}
           </List>
         </Segment>
 

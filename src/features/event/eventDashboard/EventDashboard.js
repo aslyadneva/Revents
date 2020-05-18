@@ -6,10 +6,12 @@ import EventActivity from '../eventActivity/EventActivity';
 import { connect } from 'react-redux';
 import { deleteEvent } from '../eventActions'; 
 
+import { firestoreConnect } from 'react-redux-firebase';
+
 
 const mapStateToProps = state => {
   return {
-    events: state.events
+    events: state.firestore.ordered.events
   }
 }
 
@@ -41,4 +43,8 @@ class EventDashboard extends Component {
   }
 }
 
-export default connect(mapStateToProps, {deleteEvent})(EventDashboard);
+export default connect(
+  mapStateToProps, 
+  {deleteEvent}
+)(firestoreConnect([{collection: 'events'}])(EventDashboard))
+                      
