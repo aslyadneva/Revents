@@ -1,16 +1,100 @@
-import { LOGIN_USER, LOGOUT_USER } from "./authTypes"
+import { LOGIN_USER } from "./authTypes"
 import { closeModal } from "../modals/modalActions"
+import { SubmissionError, reset } from "redux-form"
+import { toastr } from "react-redux-toastr"
 
 export const loginUser = creds => {
   
-  return function (dispatch) {
-    dispatch({ type: LOGIN_USER, payload: creds })
-    dispatch(closeModal())
+  return async function (dispatch, getState, {getFirebase}) {
+    const firebase = getFirebase()
+    try {
+      await firebase
+        .auth()
+        .signInWithEmailAndPassword(creds.email, creds.password)
+
+      dispatch(closeModal())
+
+    } catch (error) {
+      console.log(error)
+      throw new SubmissionError({
+        _error: error.message
+      })      
+    }    
   }
 }
 
-export const logoutUser = () => {
-  return {
-    type: LOGOUT_USER
+export const socialLogin = selectedProvider => {
+  return async function (dispatch, getState, {getFirebase, getFirestore}) {
+    const firebase = getFirebase()
+    const firestore = getFirestore()
+
+    try {
+      dispatch(closeModal())
+      const user = await firebase.login({
+        provider: selectedProvider, 
+        type: 'popup'
+      })
+      
+      if (user.additionalUserInfo.isNewUser) {
+        await firestore.set(`users/${user.user.uid}`, {
+          displayName: user.profile.displayName, 
+          photoURL: user.profile.avatarUrl, 
+          createdAt: firestore.FieldValue.serverTimestamp()
+        })
+      }
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export const registerUser = user => {
+  return async function (dispatch, getState, {getFirebase, getFirestore}) {
+    const firebase = getFirebase()
+    const firestore = getFirestore()
+
+    try {
+      let createdUser = await firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
+      console.log(createdUser)
+
+      await createdUser.user.updateProfile({
+        displayName: user.displayName
+      })
+
+      // create a new user profile in firestore database 
+      let newUser = {
+        displayName: user.displayName, 
+        createdAt: firestore.FieldValue.serverTimestamp()
+      }
+      await firestore.set(`users/${createdUser.user.uid}`, {...newUser})
+
+      dispatch(closeModal())
+
+    } catch (error) {
+      console.log(error)
+      throw new SubmissionError({
+        _error: error.message
+      })      
+    }
+
+  }
+}
+
+export const updatePassword = creds => {
+  return async function (dispatch, getState, {getFirebase}) {
+    const firebase = getFirebase()
+    const user = firebase.auth().currentUser
+
+    try { 
+      await user.updatePassword(creds.newPassword1)
+      await dispatch(reset('account'))
+      toastr.success('Success', 'Your password has been updated')
+    } catch (error) {
+      throw new SubmissionError({
+        _error: error.message
+      })
+    }
+
   }
 }

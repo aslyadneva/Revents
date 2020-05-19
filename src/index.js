@@ -20,7 +20,8 @@ import firebase from './app/config/firebase'
 const rrFirebaseConfig = {
   userProfile: 'users', 
   attachAuthIsReady: true, // allows us to wait for authentication to be ready before rendering the app
-  useFirestoreForProfile: true  // this stores user date in fireSTORE not fireBASE
+  useFirestoreForProfile: true,  // this stores user date in fireSTORE not fireBASE
+  updateProfileOnLogin: false
 }
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; 
