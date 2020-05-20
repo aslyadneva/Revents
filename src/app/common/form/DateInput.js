@@ -4,7 +4,6 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 const DateInput = ({ input, width, placeholder, meta: {touched, error}, ...rest }) => {
-  console.log(input.value)
   return (
     <Form.Field error={touched && !!error}>
       <DatePicker
